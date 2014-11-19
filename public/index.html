@@ -16,10 +16,10 @@
       <div class="display" id="front">
         <img src={{photo.path}} />
       </div>
-      <button class="btn" ng-click="forward()">Forward</button>
-      <button class="btn" ng-click="back()">Back</button>
-      <button class="btn" ng-click="left()">Left</button>
-      <button class="btn" ng-click="right()">Right</button>
+      <button class="btn" ng-show="hasPhoto.forward" ng-click="forward()">Forward</button>
+      <button class="btn" ng-show="hasPhoto.back" ng-click="back()">Back</button>
+      <button class="btn" ng-show="hasPhoto.left" ng-click="left()">Left</button>
+      <button class="btn" ng-show="hasPhoto.right" ng-click="right()">Right</button>
 
       <img ng-show="flags.forward" src="images/triangle.png" style="transform: rotate(0deg);"/>
       <img ng-show="flags.back" src="images/triangle.png" style="transform: rotate(180deg);"/>

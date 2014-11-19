@@ -1,5 +1,5 @@
-App.controller "ViewCtrl", ["$scope", "fetchPhoto", "switchArrow",
-($scope, fetchPhoto, switchArrow) ->
+App.controller "ViewCtrl", ["$scope", "fetchMapInfo", "switchArrow",
+($scope, fetchMapInfo, switchArrow) ->
   # パラメータ宣言
   $scope.col = {
     x: 0,
@@ -15,11 +15,21 @@ App.controller "ViewCtrl", ["$scope", "fetchPhoto", "switchArrow",
       right: false
   }
 
+  $scope.hasPhoto = {
+      forward: false,
+      back: false,
+      left: false,
+      right: false
+  }
+
   # 初期画像取得
-  $scope.photo = fetchPhoto.fetch_photo_with($scope.col.x,
-                                      $scope.col.y,
-                                      $scope.col.z,
-                                      $scope.theta).query()
+  $scope.photo = fetchMapInfo.fetch_photo_with($scope.col.x,
+                                             $scope.col.y,
+                                             $scope.col.z,
+                                             $scope.theta).query()
+  $scope.hasPhoto = fetchMapInfo.feel_all_around($scope.col.x,
+                                                 $scope.col.y,
+                                                 $scope.col.z).query()
   
   # ボタン処理の部分
   $scope.forward = ->
