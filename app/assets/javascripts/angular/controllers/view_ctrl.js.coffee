@@ -8,7 +8,7 @@ App.controller "ViewCtrl", ["$scope", "fetchMapInfo",
   }
   $scope.theta = 0
 
-  $scope.flags = {
+  $scope.direction = {
       forward: true,
       back: false,
       left: false,
@@ -21,22 +21,16 @@ App.controller "ViewCtrl", ["$scope", "fetchMapInfo",
       left: false,
       right: false
   }
-  
-  change_col = {
-    "forward": -> $scope.col.y += 1,
-    "back": -> $scope.col.y += -1,
-    "left": -> $scope.col.x += -1,
-    "right": -> $scope.col.x += 1
-  }
 
   # 初期画像取得
-  $scope.photo = fetchMapInfo.fetch_photo_with($scope.col.x,
-                                             $scope.col.y,
-                                             $scope.col.z,
-                                             $scope.theta).query()
-  $scope.hasPhoto = fetchMapInfo.feel_all_around($scope.col.x,
-                                                 $scope.col.y,
-                                                 $scope.col.z).query()
+  $scope.photo = fetchMapInfo.fetch_photo_with($scope.col,
+                                               $scope.theta).query()
+  $scope.hasPhoto = fetchMapInfo.feel_all_around($scope.col).query()
+
+  updateMapInfo = () ->
+      $scope.photo = fetchMapInfo.fetch_photo_with($scope.col,
+                                                   $scope.theta).query()
+      $scope.hasPhoto = fetchMapInfo.feel_all_around($scope.col).query()
 
   moveTo = (direction) ->
     switch direction
@@ -61,12 +55,22 @@ App.controller "ViewCtrl", ["$scope", "fetchMapInfo",
         $scope.theta = ($scope.theta + 90) % 360
   
   # ボタン処理の部分
-  $scope.forward = ->
-      moveNextCol("forward")
-  $scope.back = ->
-      moveNextCol("back")
-  $scope.left = ->
-      moveNextCol("left")
-  $scope.right = ->
-      moveNextCol("right")
+  $scope.goForward = ->
+      moveTo("forward")
+      updateMapInfo()
+  $scope.goBack = ->
+      moveTo("back")
+      updateMapInfo()
+  $scope.goLeft = ->
+      moveTo("left")
+      updateMapInfo()
+  $scope.goRight = ->
+      moveTo("right")
+      updateMapInfo()
+  $scope.turnLeft = ->
+      turnTo("left")
+      updateMapInfo()
+  $scope.turnRight = ->
+      turnTo("right")
+      updateMapInfo()
 ]
